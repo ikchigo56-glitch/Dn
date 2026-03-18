@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel_Tech - Solutions Digitales Innovantes</title>
+    <!-- META OG (Optimisation SEO & Partage) -->
+    <meta property="og:title" content="Daniel_Tech - Solutions Digitales Innovantes">
+    <meta property="og:description" content="Développement web, bots, design, formation et assistance technique au Gabon et à distance. Transformez vos idées en réalité digitale.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+    <meta property="og:url" content="https://daniel-tech.vercel.app">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables et reset */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --gray-light: #e2e8f2;
+            --transition: all 0.3s ease;
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
+            --card-bg: white;
+            --header-bg: rgba(255,255,255,0.95);
+        }
+
+        /* Mode sombre */
+        body.dark-mode {
+            --bg-color: #1a1e2b;
+            --text-color: #f1f5f9;
+            --card-bg: #2d3349;
+            --gray-light: #2d3349;
+            --light: #1a1e2b;
+            --secondary: #f1f5f9;
+            --gray: #a0a8b9;
+            --header-bg: rgba(26,30,43,0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            font-size: 16px;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Barre de progression */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            z-index: 1002;
+            transition: width 0.1s;
+        }
+
+        /* Header amélioré */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        header.scrolled {
+            background-color: var(--header-bg);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--primary);
+            z-index: 1001;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Bouton mode sombre */
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: var(--transition);
+        }
+        .theme-toggle:hover {
+            color: var(--primary);
+            transform: rotate(15deg);
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--primary);
+            z-index: 1001;
+        }
+
+        /* Hero Section avec vidéo */
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .video-background video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(15,23,42,0.7) 0%, rgba(15,23,42,0.5) 50%, rgba(15,23,42,0.8) 100%);
+            z-index: -1;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; line-height: 1.2; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 14px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(245,158,11,0.3);
+        }
+        .btn:hover {
+            background-color: #e69008;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(245,158,11,0.4);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+        .btn-secondary:hover { background-color: rgba(255,255,255,0.1); }
+
+        /* Compteurs statistiques */
+        .stats {
+            background-color: var(--card-bg);
+            padding: 60px 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        .stat-item { text-align: center; flex: 1; min-width: 200px; }
+        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; }
+        .stat-label { color: var(--gray); font-size: 1rem; }
+
+        /* About Section */
+        .section { padding: 80px 0; }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--text-color);
+            display: inline-block;
+        }
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary);
+        }
+        .about-content { display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
+        .about-text { flex: 1; min-width: 300px; }
+        .about-text p { margin-bottom: 20px; color: var(--gray); }
+        .about-image { flex: 1; text-align: center; min-width: 300px; }
+        .about-image img { max-width: 100%; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        /* Services Section */
+        .services { background-color: var(--gray-light); }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
+        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .service-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        .service-card h3 { margin-bottom: 15px; font-size: 1.3rem; }
+        .service-card p { color: var(--gray); font-size: 0.95rem; margin-bottom: 20px; }
+        .service-link {
+            margin-top: auto;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+        }
+        .service-link:hover { color: var(--accent); gap: 10px; }
+
+        /* Portfolio / Réalisations */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .portfolio-item {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+        .portfolio-item:hover { transform: translateY(-5px); }
+        .portfolio-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .portfolio-info { padding: 20px; }
+        .portfolio-info h4 { margin-bottom: 10px; }
+        .portfolio-info p { color: var(--gray); font-size: 0.9rem; }
+
+        /* Certifications / Partenaires avec fond img.png */
+        .partners {
+            background-color: var(--card-bg);
+            background-image: url('img.png'); /* si img.png existe dans le dossier */
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: overlay;
+            padding: 40px 0;
+            text-align: center;
+        }
+        .partners-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            background-color: rgba(255,255,255,0.7); /* pour lisibilité */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .partner-logo {
+            filter: grayscale(100%);
+            opacity: 0.8;
+            transition: var(--transition);
+            max-height: 50px;
+        }
+        .partner-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+        }
+
+        /* Pricing Section */
+        .pricing { background-color: var(--secondary); color: white; }
+        .pricing .section-title h2 { color: white; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .pricing-card { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 30px; text-align: center; transition: var(--transition); border: 1px solid rgba(255,255,255,0.1); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+        .pricing-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.5s ease; }
+        .pricing-card:hover::before { transform: scaleX(1); }
+        .pricing-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.1); }
+        .pricing-card.featured { background: rgba(245,158,11,0.1); border-color: var(--accent); transform: scale(1.05); }
+        .pricing-card.featured::before { background: var(--primary); transform: scaleX(1); }
+        .pricing-badge { position: absolute; top: 20px; right: -30px; background: var(--accent); color: var(--secondary); padding: 5px 30px; transform: rotate(45deg); font-weight: 600; font-size: 0.8rem; }
+        .pricing-icon { font-size: 2.5rem; color: var(--accent); margin-bottom: 20px; }
+        .pricing-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .price { font-size: 2.2rem; font-weight: 700; color: var(--accent); margin-bottom: 20px; }
+        .pricing-features { list-style: none; margin-bottom: 25px; text-align: left; flex-grow: 1; }
+        .pricing-features li { margin-bottom: 10px; padding-left: 30px; position: relative; font-size: 0.9rem; }
+        .pricing-features li:before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+        .pricing-card p { font-size: 0.9rem; }
+
+        /* Why Section */
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .why-card { text-align: center; padding: 30px 20px; transition: var(--transition); }
+        .why-card:hover { transform: translateY(-5px); }
+        .why-icon { font-size: 2.2rem; color: var(--primary); margin-bottom: 15px; }
+        .why-card h3 { margin-bottom: 10px; }
+        .why-card p { color: var(--gray); }
+
+        /* Témoignages (avis clients) */
+        .testimonials { background-color: var(--gray-light); }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .testimonial-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .testimonial-card::before { content: '"'; position: absolute; top: 10px; left: 20px; font-size: 4rem; color: var(--primary); opacity: 0.2; font-family: Georgia, serif; }
+        .testimonial-text { margin-bottom: 20px; font-style: italic; color: var(--gray); }
+        .testimonial-author { display: flex; align-items: center; }
+        .author-avatar {
+            width: 50px; height: 50px; border-radius: 50%;
+            background-size: cover; background-position: center;
+            margin-right: 15px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .author-info h4 { margin-bottom: 5px; font-size: 1rem; }
+        .author-info p { color: var(--gray); font-size: 0.85rem; }
+
+        /* Formulaire d'ajout d'avis */
+        .add-review {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .add-review h3 { margin-bottom: 20px; text-align: center; }
+        .preview-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 10px auto;
+            display: block;
+            border: 2px solid var(--primary);
+        }
+
+        /* FAQ améliorée */
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            margin-bottom: 16px;
+            padding: 0 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        .faq-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(37,99,235,0.15);
+        }
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 18px 0;
+            color: var(--text-color);
+            font-size: 1.1rem;
+        }
+        .faq-question i {
+            color: var(--primary);
+            transition: transform 0.4s ease, color 0.2s;
+            font-size: 1.2rem;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+            color: var(--accent);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--gray);
+            padding: 0 0 0 0;
+            line-height: 1.7;
+            border-top: 0px solid transparent;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px; /* assez grand pour le contenu */
+            padding: 0 0 20px 0;
+            border-top: 1px solid var(--gray-light);
+            margin-top: 8px;
+        }
+
+        /* Contact Section */
+        .contact { background-color: var(--secondary); color: white; }
+        .contact-content { display: flex; gap: 40px; flex-wrap: wrap; }
+        .contact-info { flex: 1; min-width: 300px; }
+        .contact-info h3 { margin-bottom: 20px; }
+        .contact-details { margin-bottom: 30px; }
+        .contact-item { display: flex; align-items: center; margin-bottom: 15px; }
+        .contact-item i { margin-right: 15px; color: var(--accent); width: 20px; }
+        .contact-link { color: white; text-decoration: none; transition: var(--transition); }
+        .contact-link:hover { color: var(--accent); }
+        .contact-form { flex: 1; min-width: 300px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; }
+        .form-control {
+            width: 100%; padding: 12px 15px; border-radius: 5px; border: none;
+            background-color: rgba(255,255,255,0.1); color: white;
+            transition: var(--transition);
+        }
+        .form-control:focus { outline: 2px solid var(--primary); background-color: rgba(255,255,255,0.15); }
+        textarea.form-control { min-height: 150px; resize: vertical; }
+        .message { padding: 10px; border-radius: 5px; margin-top: 15px; display: none; }
+        .message.success { background-color: rgba(34,197,94,0.2); color: #22c55e; border: 1px solid #22c55e; }
+        .message.error { background-color: rgba(239,68,68,0.2); color: #ef4444; border: 1px solid #ef4444; }
+
+        /* Footer */
+        footer { background-color: var(--secondary); color: white; text-align: center; padding: 40px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+        .footer-content { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .social-links { display: flex; gap: 15px; }
+        .social-link {
+            display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+            background-color: rgba(255,255,255,0.1); border-radius: 50%; color: white; text-decoration: none;
+            transition: var(--transition);
+        }
+        .social-link:hover { background-color: var(--primary); transform: translateY(-3px); }
+
+        /* Bouton WhatsApp flottant */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            line-height: 60px;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: var(--transition);
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background-color: #20ba5a;
+        }
+
+        /* Animations */
+        .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-toggle { display: block; }
+            .logo { position: absolute; left: 50%; transform: translateX(-50%); }
+            .nav-menu {
+                position: fixed; top: 0; left: -100%; flex-direction: column; background-color: var(--card-bg);
+                width: 80%; max-width: 300px; height: 100vh; padding: 80px 0 30px; transition: var(--transition);
+                z-index: 999; gap: 0;
+            }
+            .nav-menu.active { left: 0; }
+            .nav-link { display: block; padding: 15px 0; border-bottom: 1px solid var(--gray-light); }
+            .theme-toggle { margin: 15px 0 0; }
+            .hero h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Barre de progression -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Header avec bouton mode sombre -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="logo">
+                <i class="fas fa-laptop-code"></i>
+                <span>Daniel_Tech</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#accueil" class="nav-link">Accueil</a></li>
+                <li><a href="#apropos" class="nav-link">À propos</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#portfolio" class="nav-link">Réalisations</a></li>
+                <li><a href="#tarifs" class="nav-link">Tarifs</a></li>
+                <li><a href="#pourquoi" class="nav-link">Pourquoi nous</a></li>
+                <li><a href="#temoignages" class="nav-link">Témoignages</a></li>
+                <li><a href="#faq" class="nav-link">FAQ</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><button class="theme-toggle" id="themeToggle" aria-label="Mode sombre"><i class="fas fa-moon"></i></button></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- WhatsApp Flottant -->
+    <a href="https://wa.me/24174085772" class="whatsapp-float" target="_blank" title="Contactez-nous sur WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Hero Section avec vidéo -->
+    <section class="hero" id="accueil">
+        <div class="video-background">
+            <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
+                <source src="3.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="container hero-content">
+            <h1>Solutions Digitales Innovantes pour Votre Succès</h1>
+            <p>Nous transformons vos idées en réalité digitale avec des solutions sur mesure, performantes et créatives.</p>
+            <div class="btn-container">
+                <a href="#tarifs" class="btn">Découvrir nos offres</a>
+                <a href="#contact" class="btn btn-secondary">Nous contacter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistiques -->
+    <section class="stats">
+        <div class="container stats-container">
+            <div class="stat-item fade-in"><div class="stat-number" id="projectsCount">0</div><div class="stat-label">Projets Réalisés</div></div>
+            <div class="stat-item fade-in"><div class="stat-number" id="clientsCount">0</div><div class="stat-label">Clients Satisfaits</div></div>
+            <div class="stat-item fade-in"><div class="stat-number" id="experienceCount">2ans</div><div class="stat-label">Années d'Expérience</div></div>
+            <div class="stat-item fade-in"><div class="stat-number" id="supportCount">24/7</div><div class="stat-label">Support Client</div></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section" id="apropos">
+        <div class="container">
+            <div class="section-title"><h2>À propos de Daniel_Tech</h2></div>
+            <div class="about-content">
+                <div class="about-text fade-in">
+                    <p><strong>Daniel_Tech</strong> est une entreprise dynamique spécialisée dans les solutions technologiques sur mesure. Nous accompagnons particuliers, professionnels et institutions dans la transformation digitale, le développement d'outils performants, et la résolution de problèmes techniques avec précision et créativité.</p>
+                    <p>Notre mission est de fournir des solutions innovantes qui répondent aux besoins spécifiques de chaque client, en combinant expertise technique et approche personnalisée.</p>
+                    <p>Basés à Akanda, Estuaire – Gabon, nous intervenons également en ligne pour répondre aux besoins de clients à travers le monde.</p>
+                </div>
+                <div class="about-image fade-in">
+                    <img src="img.png" alt="Daniel_Tech - Solutions Technologiques">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section avec CTA -->
+    <section class="section services" id="services">
+        <div class="container">
+            <div class="section-title"><h2>Nos Services</h2></div>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <h3>Développement Web & Mobile</h3>
+                    <p>Sites vitrines, applications, plateformes interactives design responsive.</p>
+                    <a href="#contact" class="service-link" onclick="selectService('Développement Web & Mobile')">Demander ce service <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Automatisation & Bots</h3>
+                    <p>Bots intelligents pour WhatsApp, Telegram, e-commerce, automatisation.</p>
+                    <a href="#contact" class="service-link" onclick="selectService('Automatisation & Bots')">Demander ce service <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Assistance Technique</h3>
+                    <p>Dépannage, optimisation, installation, maintenance sécurisée.</p>
+                    <a href="#contact" class="service-link" onclick="selectService('Assistance Technique')">Demander ce service <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Design & Identité Visuelle</h3>
+                    <p>Logos, cartes, interfaces stylisées pour votre marque.</p>
+                    <a href="#contact" class="service-link" onclick="selectService('Design & Identité Visuelle')">Demander ce service <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                    <h3>Formation & Accompagnement</h3>
+                    <p>Codage, trading, UI/UX, outils numériques.</p>
+                    <a href="#contact" class="service-link" onclick="selectService('Formation & Accompagnement')">Demander ce service <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="service-card fade-in">
+                    <div class="service-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <h3>E-commerce & Marketplaces</h3>
+                    <p>Boutiques en ligne sécurisées avec paiements intégrés.</p>
+                    <a href="#contact" class="service-link" onclick="selectService('E-commerce & Marketplaces')">Demander ce service <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio (Preuve sociale visuelle) -->
+    <section class="section" id="portfolio">
+        <div class="container">
+            <div class="section-title"><h2>Nos Réalisations</h2></div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item fade-in">
+                    <img src="https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Site e-commerce" class="portfolio-img">
+                    <div class="portfolio-info"><h4>E-commerce Mode</h4><p>Boutique en ligne avec paiement mobile.</p></div>
+                </div>
+                <div class="portfolio-item fade-in">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Application mobile" class="portfolio-img">
+                    <div class="portfolio-info"><h4>App Livraison</h4><p>Application Android/iOS pour restaurant.</p></div>
+                </div>
+                <div class="portfolio-item fade-in">
+                    <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Bot WhatsApp" class="portfolio-img">
+                    <div class="portfolio-info"><h4>Bot Support</h4><p>Assistant automatique pour service client.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications / Partenaires avec fond img.png et logos SVG -->
+    <div class="partners">
+        <div class="container partners-container">
+            <!-- Google SVG (via logo) -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/320px-Google_2015_logo.svg.png" alt="Google Partner" class="partner-logo" style="height:40px;">
+            <!-- Microsoft SVG -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/320px-Microsoft_logo_%282012%29.svg.png" alt="Microsoft" class="partner-logo" style="height:40px;">
+            <!-- Meta SVG -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Meta_Platforms_Inc._logo.svg/320px-Meta_Platforms_Inc._logo.svg.png" alt="Meta" class="partner-logo" style="height:40px;">
+        </div>
+    </div>
+
+    <!-- Pricing Section -->
+    <section class="section pricing" id="tarifs">
+        <div class="container">
+            <div class="section-title"><h2>Nos Tarifs</h2></div>
+            <div class="pricing-grid">
+                <div class="pricing-card fade-in">
+                    <div class="pricing-icon"><i class="fas fa-globe"></i></div>
+                    <h3>Création de Sites Web</h3>
+                    <div class="price">À partir de 10 000 FCFA</div>
+                    <ul class="pricing-features"><li>Site vitrine simple: 25 000 – 50 000 FCFA</li><li>Portfolio / blog: 10 000 – 20 000 FCFA</li><li>Site e-commerce: 50 000 – 100 000 FCFA</li><li>Application web sur mesure: 50 000 – 150 000 FCFA</li></ul>
+                    <a href="#contact" class="btn" style="margin-top: auto;" onclick="selectService('Création de Sites Web')">Demander un devis</a>
+                </div>
+                <div class="pricing-card featured fade-in">
+                    <div class="pricing-badge">Populaire</div>
+                    <div class="pricing-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Création de Bots</h3>
+                    <div class="price">À partir de 10 000 FCFA</div>
+                    <ul class="pricing-features"><li>Bot FAQ / réponses simples: 10 000 – 50 000 FCFA</li><li>Bot connecté à base de données / API: 10 000 – 150 000 FCFA</li><li>Bot intelligent (IA, NLP, automatisation): 50 000 – 200 000 FCFA</li></ul>
+                    <a href="#contact" class="btn" style="margin-top: auto;" onclick="selectService('Création de Bots')">Demander un devis</a>
+                </div>
+                <div class="pricing-card fade-in">
+                    <div class="pricing-icon"><i class="fas fa-tools"></i></div>
+                    <h3>Services Techniques & Créatifs</h3>
+                    <div class="price">À partir de 5 000 FCFA</div>
+                    <ul class="pricing-features"><li>Dépannage informatique: 5 000 – 30 000 FCFA</li><li>Design & identité visuelle: 20 000 – 100 000 FCFA</li><li>Formation personnalisée: 15 000 – 80 000 FCFA</li><li>Automatisation & mini-apps: 80 000 – 300 000 FCFA</li><li>Maintenance / optimisation: 10 000 – 40 000 FCFA</li></ul>
+                    <a href="#contact" class="btn" style="margin-top: auto;" onclick="selectService('Services Techniques & Créatifs')">Demander un devis</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Section -->
+    <section class="section" id="pourquoi">
+        <div class="container">
+            <div class="section-title"><h2>Pourquoi Choisir Daniel_Tech ?</h2></div>
+            <div class="why-grid">
+                <div class="why-card fade-in"><div class="why-icon"><i class="fas fa-paint-brush"></i></div><h3>Créativité & Personnalisation</h3><p>Chaque projet est unique, pensé pour vous.</p></div>
+                <div class="why-card fade-in"><div class="why-icon"><i class="fas fa-cogs"></i></div><h3>Maîtrise Technique</h3><p>Expertise approfondie en développement.</p></div>
+                <div class="why-card fade-in"><div class="why-icon"><i class="fas fa-bolt"></i></div><h3>Réactivité & Suivi</h3><p>Support rapide et évolutif.</p></div>
+                <div class="why-card fade-in"><div class="why-icon"><i class="fas fa-globe"></i></div><h3>Ouverture Digitale</h3><p>Présentiel et à distance.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Témoignages clients dynamiques avec ajout -->
+    <section class="section testimonials" id="temoignages">
+        <div class="container">
+            <div class="section-title"><h2>Ils nous font confiance</h2></div>
+            <div class="testimonials-grid" id="testimonialsGrid">
+                <!-- Les témoignages seront injectés ici via JavaScript -->
+            </div>
+
+            <!-- Formulaire d'ajout d'avis -->
+            <div class="add-review fade-in">
+                <h3>Donnez votre avis</h3>
+                <form id="reviewForm">
+                    <div class="form-group">
+                        <label for="reviewName">Votre nom</label>
+                        <input type="text" id="reviewName" class="form-control" style="color:var(--text-color); background-color:var(--bg-color);" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Votre message</label>
+                        <textarea id="reviewText" class="form-control" style="color:var(--text-color); background-color:var(--bg-color);" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewImage">Photo de profil (URL ou fichier)</label>
+                        <input type="file" id="reviewImage" class="form-control" accept="image/*">
+                        <small style="color:var(--gray);">Ou entrez une URL d'image ci-dessous</small>
+                        <input type="url" id="reviewImageUrl" class="form-control" style="margin-top:10px;" placeholder="https://...">
+                    </div>
+                    <div id="imagePreview"></div>
+                    <button type="submit" class="btn" style="margin-top:15px;">Publier mon avis</button>
+                    <div id="reviewMessage" class="message"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ améliorée -->
+    <section class="section" id="faq">
+        <div class="container">
+            <div class="section-title"><h2>Questions Fréquentes</h2></div>
+            <div class="faq-grid">
+                <div class="faq-item fade-in">
+                    <div class="faq-question">Quels sont les délais de livraison ? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">Un site vitrine simple est livré sous 5-7 jours, un site e-commerce sous 2-3 semaines selon la complexité. Pour les bots, comptez 3 à 10 jours selon les fonctionnalités.</div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">Proposez-vous un service après-vente ? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">Oui, une maintenance et un support sont inclus pendant 1 mois après la livraison. Des forfaits mensuels de maintenance sont également disponibles (à partir de 10 000 FCFA/mois).</div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">Travaillez-vous uniquement au Gabon ? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">Nous intervenons en ligne partout dans le monde, et en présentiel à Akanda et Libreville. Les rendez-vous physiques sont possibles sur demande.</div>
+                </div>
+                <div class="faq-item fade-in">
+                    <div class="faq-question">Quels moyens de paiement acceptez-vous ? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">Nous acceptons Airtel Money, Moov Money, virement bancaire et PayPal (pour les clients internationaux). Un acompte de 50% est demandé pour démarrer.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title"><h2>Contact</h2></div>
+            <div class="contact-content">
+                <div class="contact-info fade-in">
+                    <h3>Restons en contact</h3>
+                    <div class="contact-details">
+                        <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:juankaisen5@gmail.com" class="contact-link">juankaisen5@gmail.com</a></div>
+                        <div class="contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/24174085772" class="contact-link" target="_blank">+241 07 40 85 772</a></div>
+                        <div class="contact-item"><i class="fas fa-globe"></i><a href="https://cv-tailwindcss-daniel.vercel.app/" class="contact-link" target="_blank">Mon Portfolio</a></div>
+                        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>Akanda, Estuaire – Gabon</span></div>
+                    </div>
+                    <div class="social-links" style="justify-content: flex-start;">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form fade-in">
+                    <form id="contactForm" action="https://formsubmit.co/juankaisen5@gmail.com" method="POST">
+                        <!-- Honeypot anti-spam -->
+                        <input type="text" name="_honey" style="display:none;">
+                        <!-- Redirection après envoi -->
+                        <input type="hidden" name="_next" value="https://daniel-tech.vercel.app/merci.html">
+                        <input type="hidden" name="_captcha" value="false">
+                        <div class="form-group"><label for="name">Nom complet</label><input type="text" name="name" id="name" class="form-control" required></div>
+                        <div class="form-group"><label for="email">Email</label><input type="email" name="email" id="email" class="form-control" required></div>
+                        <div class="form-group"><label for="subject">Sujet</label><input type="text" name="subject" id="subject" class="form-control" required></div>
+                        <div class="form-group"><label for="service">Service intéressé</label>
+                            <select name="service" id="service" class="form-control" required>
+                                <option value="">Sélectionnez un service</option>
+                                <option value="site-web">Création de site web</option>
+                                <option value="bot">Développement de bot</option>
+                                <option value="design">Design & identité visuelle</option>
+                                <option value="formation">Formation</option>
+                                <option value="depannage">Dépannage technique</option>
+                                <option value="autre">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label for="message">Message</label><textarea name="message" id="message" class="form-control" required placeholder="Décrivez votre projet..."></textarea></div>
+                        <button type="submit" class="btn">Envoyer le message</button>
+                        <div id="formMessage" class="message"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="social-links">
+                <a href="https://www.fb.com/l/6lp1kJRRR" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>&copy; 2025 Daniel_Tech & JEE maintenance. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile, header scroll, animations existantes
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        mobileToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            mobileToggle.querySelector('i').classList.toggle('fa-bars');
+            mobileToggle.querySelector('i').classList.toggle('fa-times');
+        });
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                mobileToggle.querySelector('i').classList.add('fa-bars');
+                mobileToggle.querySelector('i').classList.remove('fa-times');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            document.getElementById('header').classList.toggle('scrolled', window.scrollY > 100);
+            // Barre de progression
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            document.getElementById('progressBar').style.width = (winScroll / height) * 100 + '%';
+        });
+
+        // Animations fade-in
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Compteurs animés
+        function animateCounter(element, target, duration) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) { element.textContent = target; clearInterval(timer); }
+                else element.textContent = Math.floor(start);
+            }, 16);
+        }
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(document.getElementById('projectsCount'), 150, 2000);
+                    animateCounter(document.getElementById('clientsCount'), 120, 2000);
+                    document.getElementById('experienceCount').textContent = '3ans';
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+        statsObserver.observe(document.querySelector('.stats'));
+
+        // Formulaire de contact (FormSubmit) - on gère le message
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // On laisse le formulaire partir normalement, mais on peut afficher un message
+            formMessage.textContent = "Envoi en cours...";
+            formMessage.className = "message";
+            formMessage.style.display = "block";
+            // On soumet le formulaire après un petit délai pour voir le message
+            setTimeout(() => {
+                contactForm.submit();
+            }, 500);
+        });
+
+        // Pré-sélection du service dans le formulaire
+        window.selectService = function(serviceName) {
+            const select = document.getElementById('service');
+            for (let option of select.options) {
+                if (option.text.includes(serviceName) || serviceName.includes(option.text)) {
+                    option.selected = true;
+                    break;
+                }
+            }
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        };
+
+        // Smooth scroll pour ancres
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerHeight = document.getElementById('header').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+                    window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Fallback vidéo
+        const video = document.querySelector('.video-background video');
+        if (video) {
+            video.addEventListener('error', function() {
+                document.querySelector('.video-background').innerHTML = '<div style="background: url(https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80) center/cover; width: 100%; height: 100%;"></div>';
+            });
+        }
+
+        // Mode sombre
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            const icon = themeToggle.querySelector('i');
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // ========== GESTION DES AVIS CLIENTS (LocalStorage) ==========
+        let reviews = [];
+
+        // Charger les avis depuis localStorage
+        function loadReviews() {
+            const stored = localStorage.getItem('danieltech_reviews');
+            if (stored) {
+                try {
+                    reviews = JSON.parse(stored);
+                } catch (e) {
+                    reviews = [];
+                }
+            } else {
+                // Avis par défaut
+                reviews = [
+                    { name: "Marie S.", text: "Daniel_Tech a transformé notre présence en ligne avec un site web exceptionnel. Professionnalisme et réactivité !", avatar: "https://randomuser.me/api/portraits/women/44.jpg", location: "Entrepreneure, Libreville" },
+                    { name: "Pierre D.", text: "Le bot WhatsApp a automatisé 80% de notre service client. Un investissement rentable !", avatar: "https://randomuser.me/api/portraits/men/32.jpg", location: "Directeur Commercial, Port-Gentil" },
+                    { name: "Alice K.", text: "Formation au codage exceptionnelle ! J'ai développé ma première app mobile en 2 mois.", avatar: "https://randomuser.me/api/portraits/women/68.jpg", location: "Étudiante, France" }
+                ];
+            }
+            renderReviews();
+        }
+
+        // Afficher les avis dans la grille
+        function renderReviews() {
+            const grid = document.getElementById('testimonialsGrid');
+            grid.innerHTML = '';
+            reviews.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'testimonial-card fade-in';
+                card.innerHTML = `
+                    <div class="testimonial-text">"${review.text}"</div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar" style="background-image: url('${review.avatar}');"></div>
+                        <div class="author-info">
+                            <h4>${review.name}</h4>
+                            <p>${review.location || 'Client'}</p>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+                observer.observe(card);
+            });
+        }
+
+        // Ajouter un avis
+        function addReview(name, text, avatarUrl, location = 'Client') {
+            reviews.push({ name, text, avatar: avatarUrl, location });
+            localStorage.setItem('danieltech_reviews', JSON.stringify(reviews));
+            renderReviews();
+        }
+
+        // Preview image avant ajout
+        const fileInput = document.getElementById('reviewImage');
+        const urlInput = document.getElementById('reviewImageUrl');
+        const previewDiv = document.getElementById('imagePreview');
+
+        function updatePreview(src) {
+            previewDiv.innerHTML = src ? `<img src="${src}" class="preview-avatar" alt="Aperçu">` : '';
+        }
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    updatePreview(e.target.result);
+                    urlInput.value = ''; // efface l'URL
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        urlInput.addEventListener('input', function() {
+            if (this.value) {
+                updatePreview(this.value);
+                fileInput.value = ''; // efface le fichier
+            }
+        });
+
+        // Soumission du formulaire d'avis
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('reviewName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+            let avatar = urlInput.value.trim() || 'https://randomuser.me/api/portraits/lego/1.jpg'; // défaut
+
+            if (fileInput.files[0]) {
+                // Si fichier, on utilise son dataURL (déjà en preview)
+                const dataURL = previewDiv.querySelector('img')?.src;
+                if (dataURL) avatar = dataURL;
+            }
+
+            if (!name || !text) {
+                const msg = document.getElementById('reviewMessage');
+                msg.textContent = "Veuillez remplir tous les champs.";
+                msg.className = "message error";
+                msg.style.display = "block";
+                return;
+            }
+
+            addReview(name, text, avatar);
+            // Réinitialiser le formulaire
+            document.getElementById('reviewForm').reset();
+            previewDiv.innerHTML = '';
+            document.getElementById('reviewMessage').style.display = 'none';
+            alert('Merci pour votre avis ! Il a été ajouté.');
+        });
+
+        loadReviews();
+
+        // FAQ améliorée : gestion de l'accordéon
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentElement;
+                item.classList.toggle('active');
+                // Fermer les autres (optionnel, décommentez si vous voulez un seul ouvert à la fois)
+                // document.querySelectorAll('.faq-item').forEach(i => {
+                //     if (i !== item) i.classList.remove('active');
+                // });
+            });
+        });
+    </script>
+</body>
+</html>
