@@ -10,4 +10,4 @@ projects:
       runtime: static
       repo: https://github.com/ikchigo56-glitch/Dn
       staticPublishPath: Build
-      autoDeployTrigger: "off"
+      autoDeployTrigger: "on"
